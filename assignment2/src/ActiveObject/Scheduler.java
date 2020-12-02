@@ -21,19 +21,20 @@ public class Scheduler implements Runnable{
         while(true){
             lock.lock();
             MethodRequestPut methodRequestPut = activationQueue.getPutRequest();
+            MethodRequestTake methodRequestTake = activationQueue.getTakeRequest();
+            lock.unlock();
             if(methodRequestPut!=null && methodRequestPut.guard()){
+                lock.lock();
                 activationQueue.dequeuePutRequest();
+                lock.unlock();
                 methodRequestPut.execute();
             }
-            lock.unlock();
-
-            lock.lock();
-            MethodRequestTake methodRequestTake = activationQueue.getTakeRequest();
             if(methodRequestTake!=null && methodRequestTake.guard()){
+                lock.lock();
                 activationQueue.dequeueTakeRequest();
+                lock.unlock();
                 methodRequestTake.execute();
             }
-            lock.unlock();
         }
     }
 }
