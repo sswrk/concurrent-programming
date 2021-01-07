@@ -17,16 +17,13 @@ public class Producer implements CSProcess {
     // end constructor
 
     public void run() {
-        int item;
         ChannelOutputInt channelOutput = channel.out();
-        for (int k = 0; k < 100; k++) {
-            item = (int) (Math.random() * 100) + 1 + start;
-            channelOutput.write(item);
-
+        for (int k=0; k<100; k++) {
+            channelOutput.write(start + k);
 //              channel.write(item);
         } // for
 //        channel.write(-1);
         channelOutput.write(-1);
-        System.out.println("Producer" + start + " ended.");
+        System.out.println("Producer " + start + " ended.");
     } // run
 } // class Producer2
