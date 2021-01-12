@@ -1,15 +1,16 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import org.jcsp.lang.CSProcess;
-import org.jcsp.lang.SharedChannelOutput;
+import org.jcsp.lang.ChannelOutput;
 
 import Buffer.Node;
 import Buffer.DistributedBuffer;
 
 public class Producer implements CSProcess{
 
-    private final ArrayList<SharedChannelOutput<String>> availableOutputs;
+    private final List<ChannelOutput<String>> availableOutputs;
     private final Random random;
     private final String id;
     private final DistributedBuffer buffer;
@@ -30,7 +31,7 @@ public class Producer implements CSProcess{
     }
 
     public void setAvailableOutputs(){
-        ArrayList<Node> nodes = buffer.getHeadNodes();
+        List<Node> nodes = buffer.getHeadNodes();
         for(Node node : nodes){
             availableOutputs.add(node.getOutput());
         }

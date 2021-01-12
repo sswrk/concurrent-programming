@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 import org.jcsp.lang.CSProcess;
 import org.jcsp.lang.Parallel;
@@ -10,21 +11,21 @@ public class Main {
     private static final int producerNumber = 10;
     private static final int consumerNumber = 20;
     private static final int[] bufferLayout = {15, 20, 25};
-    private static final int nodeSize = 4;
+    private static final int maxNodeSize = 7;
 
     public static void main(String[] args){
 
-        ArrayList<CSProcess> processes = setProcesses();
+        List<CSProcess> processes = setProcesses();
 
         Parallel parallel = new Parallel(processes.toArray(new CSProcess[0]));
         parallel.run();
     }
 
-    private static ArrayList<CSProcess> setProcesses(){
-        DistributedBuffer buffer = new DistributedBuffer(bufferLayout, nodeSize);
+    private static List<CSProcess> setProcesses(){
+        DistributedBuffer buffer = new DistributedBuffer(bufferLayout, maxNodeSize);
 
-        ArrayList<Producer> producers = new ArrayList<>();
-        ArrayList<Consumer> consumers = new ArrayList<>();
+        List<Producer> producers = new ArrayList<>();
+        List<Consumer> consumers = new ArrayList<>();
 
         for(int i=0; i<producerNumber; i++){
             producers.add(new Producer(Integer.toString(i), buffer));
@@ -34,9 +35,9 @@ public class Main {
             consumers.add(new Consumer(Integer.toString(i), buffer));
         }
 
-        ArrayList<Node> nodes = buffer.getNodes();
+        List<Node> nodes = buffer.getNodes();
 
-        ArrayList<CSProcess> processes = new ArrayList<>();
+        List<CSProcess> processes = new ArrayList<>();
         processes.addAll(producers);
         processes.addAll(consumers);
         processes.addAll(nodes);

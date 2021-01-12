@@ -1,18 +1,19 @@
 package Buffer;
 
-import java.util.ArrayList;
-import java.util.Random;
-
-import org.jcsp.lang.AltingChannelInput;
 import org.jcsp.lang.Any2OneChannel;
 import org.jcsp.lang.CSProcess;
-import org.jcsp.lang.SharedChannelOutput;
+import org.jcsp.lang.ChannelInput;
+import org.jcsp.lang.ChannelOutput;
 
-public class Node implements CSProcess{
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
-    private final AltingChannelInput<String> input;
-    private final SharedChannelOutput<String> output;
-    private final ArrayList<SharedChannelOutput<String>> availableOutputs;
+public class Node implements CSProcess {
+
+    private final ChannelInput<String> input;
+    private final ChannelOutput<String> output;
+    private final List<ChannelOutput<String>> availableOutputs;
     private final Random random;
     private final String id;
 
@@ -32,17 +33,17 @@ public class Node implements CSProcess{
         }
     }
 
-    public void setAvailableOutputs(ArrayList<Node> nodes){
+    public void setAvailableOutputs(List<Node> nodes){
         for(Node node : nodes){
             availableOutputs.add(node.getOutput());
         }
     }
 
-    public void addOutput(SharedChannelOutput<String> output){
+    public void addOutput(ChannelOutput<String> output){
         availableOutputs.add(output);
     }
 
-    public SharedChannelOutput<String> getOutput(){
+    public ChannelOutput<String> getOutput(){
         return output;
     }
 

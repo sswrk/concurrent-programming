@@ -1,14 +1,14 @@
-import org.jcsp.lang.Channel;
-import org.jcsp.lang.AltingChannelInput;
 import org.jcsp.lang.Any2OneChannel;
 import org.jcsp.lang.CSProcess;
+import org.jcsp.lang.Channel;
+import org.jcsp.lang.ChannelInput;
 import org.jcsp.util.InfiniteBuffer;
 
 import Buffer.DistributedBuffer;
 
-public class Consumer implements CSProcess{
+public class Consumer implements CSProcess {
 
-    private final AltingChannelInput<String> input;
+    private final ChannelInput<String> input;
     private final String id;
 
     public Consumer(String id, DistributedBuffer buffer){
